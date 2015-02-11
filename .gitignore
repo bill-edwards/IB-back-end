@@ -1,0 +1,2 @@
+# Don't track the node_modules directory. Its contents can easily be installed in any new server environment. 
+node_modules/
