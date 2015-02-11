@@ -1,0 +1,7 @@
+{
+  "name": "icebreakrBE",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.11.2"
+  }
+}
