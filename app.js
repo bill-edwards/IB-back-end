@@ -19,6 +19,8 @@ mongoose.connect('mongodb://localhost:27017/icebreakr');
 // Set up public directory for serving static resources. 
 app.use(express.static(path.join(__dirname, '../public'), { maxAge: '28d' }));
 
+// API routes 
+app.use('/api', require(__dirname + '/routes/user_route.js'));
 
 // Homepage
 app.route('*').get(function(req, res, next){
