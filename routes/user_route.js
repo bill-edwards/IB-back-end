@@ -4,10 +4,23 @@
 
 var express = require('express'),
 	path = require('path'),
+	gatekeeper = require(path.join(__dirname, '../utilities/gatekeeper')),
 	User = require(path.join(__dirname, '../models/user_model.js')),
 	AppError = require(path.join(__dirname, '../app_error.js')); 
 
 var router = express.Router(); 
+
+router.route('/user/me')
+
+	// Get own user details. 
+	.get(gatekeeper, function(req, res, next){
+
+		User.findById(req.session.userId, function(err, user){
+			if (err) res.send(err);
+			res.json(user.dataForClient()); 
+		});
+
+	});
 
 router.route('/user/:user_id')
 
