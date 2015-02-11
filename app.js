@@ -3,6 +3,8 @@
 // Load required modules. 
 var express = require('express'),
 	mongoose = require('mongoose'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
 	path = require('path'),
 	fs = require('fs'),
 	AppError = require(__dirname + '/app_error.js');
@@ -19,8 +21,13 @@ mongoose.connect('mongodb://localhost:27017/icebreakr');
 // Set up public directory for serving static resources. 
 app.use(express.static(path.join(__dirname, '../public'), { maxAge: '28d' }));
 
+// Parse supplied cookies and retrieve session data. 
+app.use(cookieParser("mySecret"));
+app.use(session({secret:"mySecret", saveUninitialized:false, resave:false})); 
+
 // API routes 
 app.use('/api', require(__dirname + '/routes/user_route.js'));
+app.use('/api', require(__dirname + '/routes/login_route.js'));
 
 // Homepage
 app.route('*').get(function(req, res, next){
