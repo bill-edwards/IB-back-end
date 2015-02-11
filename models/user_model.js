@@ -1,6 +1,7 @@
 "use strict"; 
 
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+	bcrypt = require('bcrypt');
 
 // Define schema. 
 var userSchema = mongoose.Schema({
@@ -33,7 +34,15 @@ var userSchema = mongoose.Schema({
 	}
 });
 
-
+// Compare supplied cleartext and stored hashed passwords
+// Arguably the body of this could just be included directly in the login_route code. 
+// I suppose it means we (1) only require bcrypt once; (2) can potentially reuse elswhere. 
+userSchema.methods.authenticate = function(cleartextPw, callback) {
+    bcrypt.compare(cleartextPw, this.password, function(err, match) {
+        if (err) callback(err); // Ben does { return callback(err); }
+        callback(null, match);
+    });
+};
 
 // Remove sensitive data from user object for return to client. 
 userSchema.methods.dataForClient = function() {
