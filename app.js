@@ -13,7 +13,7 @@ var express = require('express'),
 var app = express(); 
 
 // Set port. 
-var port = process.env.PORT || 3001; 
+var port = process.env.PORT || 3000; 
 
 // Connect to database. 
 mongoose.connect('mongodb://localhost:27017/icebreakr');
@@ -46,5 +46,5 @@ app.use(function(err, req, res, next){
 
 // Start server. 
 app.listen(port);
-console.log("server running on port 3001");  
+console.log("server running on port 3000");  
 
