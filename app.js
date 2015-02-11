@@ -20,10 +20,6 @@ mongoose.connect('mongodb://localhost:27017/icebreakr');
 app.use(express.static(path.join(__dirname, '../public'), { maxAge: '28d' }));
 
 
-// Route for testing. 
-// REMOVE WHEN MERGING INTO MASTER. 
-app.use('/api', require(__dirname + '/dev/test_route.js'));
-
 // Homepage
 app.route('*').get(function(req, res, next){
 	res.send("It's working!");
